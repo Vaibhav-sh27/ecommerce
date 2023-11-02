@@ -4,10 +4,11 @@ const path = require('path');
 const express = require('express');
 const seedDB = require('./seed');
 const app= express();
-const productRoutes= require('./routes/productRoutes')
-const reviewRoutes= require('./routes/reviewRoutes')
-
-//seedDB()
+const productRoutes= require('./routes/productRoutes');
+const reviewRoutes= require('./routes/reviewRoutes');
+const methodOverride = require('method-override');
+ 
+// seedDB()
 mongoose.connect
 (
     db, { useNewUrlParser: true, useUnifiedTopology: true }
@@ -22,6 +23,7 @@ mongoose.connect
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(methodOverride('_method'));
 app.use('/',express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(productRoutes);
